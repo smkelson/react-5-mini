@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
 
+import {increment} from './ducks/counter';
+import {connect} from 'react-redux';
+import {decrement} from './ducks/counter';
+
 class Counter extends Component {
   render() {
+    const { increment, decrement, currentValue } = this.props;
     return (
       <div className="app">
         <section className="counter">
-          <h1 className="counter__current-value">{0}</h1>
+          <h1 className="counter__current-value">{currentValue}</h1>
           <div className="counter__button-wrapper">
             <button
               className="counter__button increment-one"
-              onClick={() => null}
+              onClick={() => increment(1)}
             >
               +1
             </button>
             <button
               className="counter__button increment-five"
-              onClick={() => null}
+              onClick={() => increment(5)}
             >
               +5
             </button>
             <button
               className="counter__button decrement-one"
-              onClick={() => null}
+              onClick={() => decrement(1)}
             >
               -1
             </button>
             <button
               className="counter__button decrement-five"
-              onClick={() => null}
+              onClick={() => decrement(5)}
             >
               -5
             </button>
@@ -56,4 +61,21 @@ class Counter extends Component {
   }
 }
 
-export default Counter;
+function filterProps(state){
+  //filter here;
+  //what you return gets put on props  
+  return state;
+}
+
+const actionsToDispatch = {
+  increment, decrement
+}
+
+
+
+const connectedCounter = connect(
+  filterProps,
+  actionsToDispatch,
+);
+
+export default connectedCounter(Counter);
